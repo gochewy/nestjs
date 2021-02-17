@@ -45,15 +45,22 @@ export class TodosService {
         return 'done';
     }
   }
-  async search(query, request) {
+  async search(request) {
+    const { q } = request.body.input;
     const token = request.headers.authorization.replace('Bearer ', '');
     const jwt: JwtPayload = jwtDecode(token);
     console.log(jwt.sub);
-    console.log(query.q);
-    const searchResponse = await client.index('todos').search(query.q, {
+    console.log(q);
+    const searchResponse = await client.index('todos').search(q, {
       filters: `userId = ${jwt.sub}`,
       attributesToHighlight: ['title'],
     });
-    return searchResponse.hits;
+    const formatted = (searchResponse.hits || []).map((m) => ({
+      id: m.id,
+      title: m.title,
+      userId: m.userId,
+      status: m.status,
+    }));
+    return formatted;
   }
 }
