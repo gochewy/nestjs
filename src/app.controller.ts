@@ -1,5 +1,11 @@
-import {Controller, Get, Inject, OnApplicationBootstrap, Query,} from '@nestjs/common';
-import {ClientProxy} from '@nestjs/microservices';
+import {
+  Controller,
+  Get,
+  Inject,
+  OnApplicationBootstrap,
+  Query,
+} from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Controller()
 export class AppController implements OnApplicationBootstrap {
