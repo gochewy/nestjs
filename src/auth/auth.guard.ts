@@ -11,10 +11,14 @@ import axios from 'axios';
 import * as jwt from 'jsonwebtoken';
 import { Cache } from 'cache-manager';
 import { GqlExecutionContext } from '@nestjs/graphql';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {}
+  constructor(
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    private configService: ConfigService,
+  ) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context);
     const graphQlContext = ctx.getContext();
@@ -32,10 +36,10 @@ export class AuthGuard implements CanActivate {
         HttpStatus.FORBIDDEN,
       );
     }
+    const publicKey = this.configService.get<string>('jwkKey');
     //Todo Rearrange if-else flow
-    const localPublicKey = await this.cacheManager.get('publicKey');
-    if (localPublicKey) {
-      const is = await jwt.verify(authToken.split(' ')[1], localPublicKey, {
+    if (publicKey) {
+      const is = await jwt.verify(authToken.split(' ')[1], publicKey, {
         algorithms: ['RS256'],
       });
       if (is.exp < new Date().getTime() / 1000) {
@@ -43,6 +47,8 @@ export class AuthGuard implements CanActivate {
           'your session is expired',
           HttpStatus.UNAUTHORIZED,
         );
+      } else {
+        return true;
       }
     } else {
       const response = await axios(
@@ -55,10 +61,10 @@ export class AuthGuard implements CanActivate {
         },
       );
       const pKey = `-----BEGIN PUBLIC KEY-----\r\n${response.data.public_key}\r\n-----END PUBLIC KEY-----`;
+      console.log('from api', pKey);
       const is = await jwt.verify(authToken.split(' ')[1], pKey, {
         algorithms: ['RS256'],
       });
-      await this.cacheManager.set('publicKey', pKey);
       if (is.exp < new Date().getTime() / 1000) {
         throw new HttpException(
           'your session is expired',

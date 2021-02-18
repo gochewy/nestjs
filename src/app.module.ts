@@ -5,6 +5,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { TodosModule } from './todos/todos.module';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { GraphQLModule } from '@nestjs/graphql';
     TodosModule,
     ConfigModule.forRoot({
       isGlobal: true,
+      load: [configuration],
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',
