@@ -51,15 +51,12 @@ export class AuthGuard implements CanActivate {
         return true;
       }
     } else {
-      const response = await axios(
-        `http://modules.swarn.ecdev.site/auth/realms/Sample`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: authToken,
-          },
+      const response = await axios(process.env.PUBLIC_KEY_URLS, {
+        method: 'GET',
+        headers: {
+          Authorization: authToken,
         },
-      );
+      });
       const pKey = `-----BEGIN PUBLIC KEY-----\r\n${response.data.public_key}\r\n-----END PUBLIC KEY-----`;
       console.log('from api', pKey);
       const is = await jwt.verify(authToken.split(' ')[1], pKey, {

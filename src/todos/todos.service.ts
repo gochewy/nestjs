@@ -60,6 +60,7 @@ export class TodosService {
       userId: m.userId,
       status: m.status,
     }));
+    console.log(formatted);
     return formatted;
   }
 }
