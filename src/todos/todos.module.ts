@@ -1,17 +1,11 @@
 import { CacheModule, HttpModule, Module } from '@nestjs/common';
 import { TodosController } from './todos.controller';
 import { TodosService } from './todos.service';
-import { GraphQLModule } from '@nestjs/graphql';
+import { TodosResolver } from './todos.resolvers';
 
 @Module({
-  imports: [
-    HttpModule,
-    CacheModule.register(),
-    GraphQLModule.forRoot({
-      autoSchemaFile: true,
-    }),
-  ],
+  imports: [HttpModule, CacheModule.register()],
   controllers: [TodosController],
-  providers: [TodosService],
+  providers: [TodosService, TodosResolver],
 })
 export class TodosModule {}

@@ -10,16 +10,18 @@ import {
 import axios from 'axios';
 import * as jwt from 'jsonwebtoken';
 import { Cache } from 'cache-manager';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const req = context.switchToHttp().getRequest();
-    if (!req.headers.authorization) {
+    const ctx = GqlExecutionContext.create(context);
+    const graphQlContext = ctx.getContext();
+    if (!graphQlContext.req.headers.authorization) {
       return false;
     }
-    await this.validateToken(req.headers.authorization);
+    await this.validateToken(graphQlContext.req.headers.authorization);
     return true;
   }
 

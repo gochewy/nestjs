@@ -1,0 +1,14 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Todo {
+  id: String!
+  title: String!
+  userId: String!
+  status: Boolean!
+}
+
+type Query {
+  searchTodo(q: String!): [Todo!]!
+}
