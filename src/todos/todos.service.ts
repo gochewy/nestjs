@@ -35,7 +35,7 @@ export class TodosService {
             status: updatedTodo.status,
           },
         ];
-        await index.updateDocuments([updatedDocument]);
+        await index.updateDocuments(updatedDocument);
         break;
       case 'DELETE':
         const docId = document.event.data.old.id;
