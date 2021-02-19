@@ -67,7 +67,7 @@ export class TodosService {
         },
       })
       .then((t) => {
-        console.log('from apollo client', t.data.searchTodo);
+        console.log('results from apollo client', t.data.searchTodo);
       });
     const jwt: JwtPayload = jwtDecode(token);
     console.log(jwt.sub);
