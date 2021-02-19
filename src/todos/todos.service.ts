@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import client from '../lib/searchClient';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
+import apolloClient from '../graphql/client';
+import { gql } from 'apollo-boost';
+import createClient from '../graphql/client';
 
 @Injectable()
 export class TodosService {
@@ -47,6 +50,25 @@ export class TodosService {
   }
   async search(query, context) {
     const token = context.req.headers.authorization.replace('Bearer ', '');
+    const apolloClient = createClient(token);
+    apolloClient
+      .query({
+        query: gql`
+          query searchTodo($q: String!) {
+            searchTodo(q: $q) {
+              id
+              title
+              userId
+            }
+          }
+        `,
+        variables: {
+          q: query,
+        },
+      })
+      .then((t) => {
+        console.log('from apollo client', t.data.searchTodo);
+      });
     const jwt: JwtPayload = jwtDecode(token);
     console.log(jwt.sub);
     console.log(query);

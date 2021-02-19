@@ -13,9 +13,4 @@ export class TodosController {
   async modifyDocument(@Body() document: any) {
     return this.todosService.modifyDocument(document);
   }
-  @Post('/search')
-  @UseGuards(AuthGuard)
-  async search(@Body() query: any, @Req() request: Request) {
-    return this.todosService.search(request);
-  }
 }
