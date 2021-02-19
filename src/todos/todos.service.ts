@@ -54,8 +54,8 @@ export class TodosService {
     apolloClient
       .query({
         query: gql`
-          query searchTodo($q: String!) {
-            searchTodo(q: $q) {
+          query searchTodo($q: Int!) {
+            todos(limit: $q) {
               id
               title
               userId
@@ -63,11 +63,11 @@ export class TodosService {
           }
         `,
         variables: {
-          q: query,
+          q: 2,
         },
       })
       .then((t) => {
-        console.log('results from apollo client', t.data.searchTodo);
+        console.log('results from apollo client', t.data.todos);
       });
     const jwt: JwtPayload = jwtDecode(token);
     console.log(jwt.sub);
