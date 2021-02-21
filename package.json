@@ -31,6 +31,9 @@
     "amqp-connection-manager": "^3.2.1",
     "amqplib": "^0.6.0",
     "apollo-boost": "^0.4.9",
+    "apollo-link": "^1.2.14",
+    "apollo-link-context": "^1.0.20",
+    "apollo-link-ws": "^1.0.20",
     "apollo-server-express": "^2.21.0",
     "axios": "^0.21.1",
     "cache-manager": "^3.4.0",
@@ -44,6 +47,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.3",
+    "subscriptions-transport-ws": "^0.9.18",
     "type-graphql": "^1.1.1"
   },
   "devDependencies": {
