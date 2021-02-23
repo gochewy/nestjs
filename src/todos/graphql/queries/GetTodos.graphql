@@ -1,0 +1,7 @@
+query GetTodos {
+    todos(limit: 9){
+        id
+        title
+        userId
+    }
+}

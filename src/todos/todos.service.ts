@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import client from '../lib/searchClient';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
-import apolloClient from '../graphql/client';
-import { gql } from 'apollo-boost';
-import createClient from '../graphql/client';
+import getGraphqlSdk from '../graphql/graphqlClient';
 
 @Injectable()
 export class TodosService {
@@ -50,28 +48,10 @@ export class TodosService {
   }
   async search(query, context) {
     const token = context.req.headers.authorization.replace('Bearer ', '');
-    const apolloClient = createClient(token);
-    apolloClient
-      .query({
-        query: gql`
-          query searchTodo($q: Int!) {
-            todos(limit: $q) {
-              id
-              title
-              userId
-            }
-          }
-        `,
-        variables: {
-          q: 2,
-        },
-      })
-      .then((t) => {
-        console.log('results from apollo client', t.data.todos);
-      });
+    const sdk = getGraphqlSdk({ token });
+    const todos = await sdk.GetTodos();
+    console.log('graphql-request response', todos.data.todos);
     const jwt: JwtPayload = jwtDecode(token);
-    console.log(jwt.sub);
-    console.log(query);
     const searchResponse = await client.index('todos').search(query, {
       filters: `userId = ${jwt.sub}`,
       attributesToHighlight: ['title'],
@@ -82,7 +62,6 @@ export class TodosService {
       userId: m.userId,
       status: m.status,
     }));
-    console.log(formatted);
     return formatted;
   }
 }

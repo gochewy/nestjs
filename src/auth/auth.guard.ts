@@ -12,6 +12,7 @@ import * as jwt from 'jsonwebtoken';
 import { Cache } from 'cache-manager';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { ConfigService } from '@nestjs/config';
+import jwtDecode, {JwtPayload} from "jwt-decode";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -39,7 +40,7 @@ export class AuthGuard implements CanActivate {
     const publicKey = this.configService.get<string>('jwkKey');
     //Todo Rearrange if-else flow
     if (publicKey) {
-      const is = await jwt.verify(authToken.split(' ')[1], publicKey, {
+      const is: any = await jwt.verify(authToken.split(' ')[1], publicKey, {
         algorithms: ['RS256'],
       });
       if (is.exp < new Date().getTime() / 1000) {
@@ -59,7 +60,7 @@ export class AuthGuard implements CanActivate {
       });
       const pKey = `-----BEGIN PUBLIC KEY-----\r\n${response.data.public_key}\r\n-----END PUBLIC KEY-----`;
       console.log('from api', pKey);
-      const is = await jwt.verify(authToken.split(' ')[1], pKey, {
+      const is: any = await jwt.verify(authToken.split(' ')[1], pKey, {
         algorithms: ['RS256'],
       });
       if (is.exp < new Date().getTime() / 1000) {
