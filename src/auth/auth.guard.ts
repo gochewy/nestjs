@@ -1,5 +1,4 @@
 import {
-  CACHE_MANAGER,
   CanActivate,
   ExecutionContext,
   HttpException,
@@ -9,17 +8,13 @@ import {
 } from '@nestjs/common';
 import axios from 'axios';
 import * as jwt from 'jsonwebtoken';
-import { Cache } from 'cache-manager';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { ConfigService } from '@nestjs/config';
 import jwtDecode, {JwtPayload} from "jwt-decode";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
-    private configService: ConfigService,
-  ) {}
+  constructor(private configService: ConfigService) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context);
     const graphQlContext = ctx.getContext();
@@ -37,6 +32,7 @@ export class AuthGuard implements CanActivate {
         HttpStatus.FORBIDDEN,
       );
     }
+    console.log('authtoken in server', authToken);
     const publicKey = this.configService.get<string>('jwkKey');
     //Todo Rearrange if-else flow
     if (publicKey) {
