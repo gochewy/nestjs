@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import client from '../lib/searchClient';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
+import getGraphqlSdk from '../graphql/graphqlClient';
 
 @Injectable()
 export class TodosService {
@@ -47,9 +48,10 @@ export class TodosService {
   }
   async search(query, context) {
     const token = context.req.headers.authorization.replace('Bearer ', '');
+    const sdk = getGraphqlSdk({ token });
+    const todos = await sdk.GetTodos();
+    console.log('graphql-request response', todos.data.todos);
     const jwt: JwtPayload = jwtDecode(token);
-    console.log(jwt.sub);
-    console.log(query);
     const searchResponse = await client.index('todos').search(query, {
       filters: `userId = ${jwt.sub}`,
       attributesToHighlight: ['title'],
@@ -60,7 +62,6 @@ export class TodosService {
       userId: m.userId,
       status: m.status,
     }));
-    console.log(formatted);
     return formatted;
   }
 }
