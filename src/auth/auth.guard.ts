@@ -34,6 +34,7 @@ export class AuthGuard implements CanActivate {
     }
     console.log('authtoken in server', authToken);
     const publicKey = this.configService.get<string>('jwkKey');
+    console.log('@@in auth guard', publicKey);
     //Todo Rearrange if-else flow
     if (publicKey) {
       const is: any = await jwt.verify(authToken.split(' ')[1], publicKey, {
