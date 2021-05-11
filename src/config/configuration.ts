@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import config from '../../../chewy.json';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const isAuthEnabled = require('../../../chewy.json').dev.modulesEnabled.auth;
+const isAuthEnabled = require('../../../chewy.json').modules.auth.enabled;
 async function getPublicKey() {
   if (!isAuthEnabled) {
     return 'NO_KEYCLOAK';
@@ -18,7 +18,7 @@ async function getPublicKey() {
   console.log('@@ calling api from config');
   return response
     ? `-----BEGIN PUBLIC KEY-----\r\n${response.data.public_key}\r\n-----END PUBLIC KEY-----`
-    : 'NO_KEYCLOAK_RESPONSES';
+    : 'NO_KEYCLOAK';
 }
 export default async () => ({
   jwkKey: await getPublicKey(),
