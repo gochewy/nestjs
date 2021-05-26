@@ -4,9 +4,13 @@ import { print } from 'graphql';
 import { GraphQLError } from 'graphql-request/dist/types';
 import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -43,7 +47,6 @@ export type Query = {
   __typename?: 'Query';
   searchTodo: Array<Todo>;
 };
-
 
 export type QuerySearchTodoArgs = {
   q: Scalars['String'];
@@ -89,7 +92,6 @@ export type Todo = {
   userId: Scalars['String'];
 };
 
-
 /** expression to compare columns of type json. All fields are combined with logical 'AND'. */
 export type Json_Comparison_Exp = {
   _eq?: Maybe<Scalars['json']>;
@@ -134,36 +136,30 @@ export type Mutation_Root = {
   update_users_by_pk?: Maybe<Users>;
 };
 
-
 /** mutation root */
 export type Mutation_RootDelete_TodosArgs = {
   where: Todos_Bool_Exp;
 };
-
 
 /** mutation root */
 export type Mutation_RootDelete_Todos_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
-
 /** mutation root */
 export type Mutation_RootDelete_UsersArgs = {
   where: Users_Bool_Exp;
 };
-
 
 /** mutation root */
 export type Mutation_RootDelete_Users_By_PkArgs = {
   id: Scalars['String'];
 };
 
-
 /** mutation root */
 export type Mutation_RootGetHelloArgs = {
   id: Scalars['String'];
 };
-
 
 /** mutation root */
 export type Mutation_RootInsert_TodosArgs = {
@@ -171,13 +167,11 @@ export type Mutation_RootInsert_TodosArgs = {
   on_conflict?: Maybe<Todos_On_Conflict>;
 };
 
-
 /** mutation root */
 export type Mutation_RootInsert_Todos_OneArgs = {
   object: Todos_Insert_Input;
   on_conflict?: Maybe<Todos_On_Conflict>;
 };
-
 
 /** mutation root */
 export type Mutation_RootInsert_UsersArgs = {
@@ -185,13 +179,11 @@ export type Mutation_RootInsert_UsersArgs = {
   on_conflict?: Maybe<Users_On_Conflict>;
 };
 
-
 /** mutation root */
 export type Mutation_RootInsert_Users_OneArgs = {
   object: Users_Insert_Input;
   on_conflict?: Maybe<Users_On_Conflict>;
 };
-
 
 /** mutation root */
 export type Mutation_RootUpdate_TodosArgs = {
@@ -199,20 +191,17 @@ export type Mutation_RootUpdate_TodosArgs = {
   where: Todos_Bool_Exp;
 };
 
-
 /** mutation root */
 export type Mutation_RootUpdate_Todos_By_PkArgs = {
   _set?: Maybe<Todos_Set_Input>;
   pk_columns: Todos_Pk_Columns_Input;
 };
 
-
 /** mutation root */
 export type Mutation_RootUpdate_UsersArgs = {
   _set?: Maybe<Users_Set_Input>;
   where: Users_Bool_Exp;
 };
-
 
 /** mutation root */
 export type Mutation_RootUpdate_Users_By_PkArgs = {
@@ -233,7 +222,7 @@ export enum Order_By {
   /** in the descending order, nulls first */
   DescNullsFirst = 'desc_nulls_first',
   /** in the descending order, nulls last */
-  DescNullsLast = 'desc_nulls_last'
+  DescNullsLast = 'desc_nulls_last',
 }
 
 /** query root */
@@ -256,18 +245,15 @@ export type Query_Root = {
   users_by_pk?: Maybe<Users>;
 };
 
-
 /** query root */
 export type Query_RootSearchMeiliArgs = {
   q?: Maybe<Scalars['String']>;
 };
 
-
 /** query root */
 export type Query_RootSearchTodoArgs = {
   q: Scalars['String'];
 };
-
 
 /** query root */
 export type Query_RootTodosArgs = {
@@ -278,7 +264,6 @@ export type Query_RootTodosArgs = {
   where?: Maybe<Todos_Bool_Exp>;
 };
 
-
 /** query root */
 export type Query_RootTodos_AggregateArgs = {
   distinct_on?: Maybe<Array<Todos_Select_Column>>;
@@ -288,12 +273,10 @@ export type Query_RootTodos_AggregateArgs = {
   where?: Maybe<Todos_Bool_Exp>;
 };
 
-
 /** query root */
 export type Query_RootTodos_By_PkArgs = {
   id: Scalars['uuid'];
 };
-
 
 /** query root */
 export type Query_RootUsersArgs = {
@@ -304,7 +287,6 @@ export type Query_RootUsersArgs = {
   where?: Maybe<Users_Bool_Exp>;
 };
 
-
 /** query root */
 export type Query_RootUsers_AggregateArgs = {
   distinct_on?: Maybe<Array<Users_Select_Column>>;
@@ -313,7 +295,6 @@ export type Query_RootUsers_AggregateArgs = {
   order_by?: Maybe<Array<Users_Order_By>>;
   where?: Maybe<Users_Bool_Exp>;
 };
-
 
 /** query root */
 export type Query_RootUsers_By_PkArgs = {
@@ -339,12 +320,10 @@ export type Subscription_Root = {
   users_by_pk?: Maybe<Users>;
 };
 
-
 /** subscription root */
 export type Subscription_RootSearchMeiliArgs = {
   q?: Maybe<Scalars['String']>;
 };
-
 
 /** subscription root */
 export type Subscription_RootTodosArgs = {
@@ -355,7 +334,6 @@ export type Subscription_RootTodosArgs = {
   where?: Maybe<Todos_Bool_Exp>;
 };
 
-
 /** subscription root */
 export type Subscription_RootTodos_AggregateArgs = {
   distinct_on?: Maybe<Array<Todos_Select_Column>>;
@@ -365,12 +343,10 @@ export type Subscription_RootTodos_AggregateArgs = {
   where?: Maybe<Todos_Bool_Exp>;
 };
 
-
 /** subscription root */
 export type Subscription_RootTodos_By_PkArgs = {
   id: Scalars['uuid'];
 };
-
 
 /** subscription root */
 export type Subscription_RootUsersArgs = {
@@ -381,7 +357,6 @@ export type Subscription_RootUsersArgs = {
   where?: Maybe<Users_Bool_Exp>;
 };
 
-
 /** subscription root */
 export type Subscription_RootUsers_AggregateArgs = {
   distinct_on?: Maybe<Array<Users_Select_Column>>;
@@ -391,12 +366,10 @@ export type Subscription_RootUsers_AggregateArgs = {
   where?: Maybe<Users_Bool_Exp>;
 };
 
-
 /** subscription root */
 export type Subscription_RootUsers_By_PkArgs = {
   id: Scalars['String'];
 };
-
 
 /** expression to compare columns of type timestamptz. All fields are combined with logical 'AND'. */
 export type Timestamptz_Comparison_Exp = {
@@ -439,7 +412,6 @@ export type Todos_Aggregate_Fields = {
   min?: Maybe<Todos_Min_Fields>;
 };
 
-
 /** aggregate fields of "todos" */
 export type Todos_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<Todos_Select_Column>>;
@@ -476,7 +448,7 @@ export type Todos_Bool_Exp = {
 /** unique or primary key constraints on table "todos" */
 export enum Todos_Constraint {
   /** unique or primary key constraint */
-  TodosPkey = 'todos_pkey'
+  TodosPkey = 'todos_pkey',
 }
 
 /** input type for inserting data into table "todos" */
@@ -579,7 +551,7 @@ export enum Todos_Select_Column {
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
-  UserId = 'userId'
+  UserId = 'userId',
 }
 
 /** input type for updating data in table "todos" */
@@ -605,7 +577,7 @@ export enum Todos_Update_Column {
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
-  UserId = 'userId'
+  UserId = 'userId',
 }
 
 /** columns and relationships of "users" */
@@ -621,7 +593,6 @@ export type Users = {
   username: Scalars['String'];
 };
 
-
 /** columns and relationships of "users" */
 export type UsersTodosArgs = {
   distinct_on?: Maybe<Array<Todos_Select_Column>>;
@@ -630,7 +601,6 @@ export type UsersTodosArgs = {
   order_by?: Maybe<Array<Todos_Order_By>>;
   where?: Maybe<Todos_Bool_Exp>;
 };
-
 
 /** columns and relationships of "users" */
 export type UsersTodos_AggregateArgs = {
@@ -655,7 +625,6 @@ export type Users_Aggregate_Fields = {
   max?: Maybe<Users_Max_Fields>;
   min?: Maybe<Users_Min_Fields>;
 };
-
 
 /** aggregate fields of "users" */
 export type Users_Aggregate_FieldsCountArgs = {
@@ -695,7 +664,7 @@ export enum Users_Constraint {
   /** unique or primary key constraint */
   UsersPkey = 'users_pkey',
   /** unique or primary key constraint */
-  UsersUsernameKey = 'users_username_key'
+  UsersUsernameKey = 'users_username_key',
 }
 
 /** input type for inserting data into table "users" */
@@ -786,7 +755,7 @@ export enum Users_Select_Column {
   /** column name */
   Name = 'name',
   /** column name */
-  Username = 'username'
+  Username = 'username',
 }
 
 /** input type for updating data in table "users" */
@@ -806,9 +775,8 @@ export enum Users_Update_Column {
   /** column name */
   Name = 'name',
   /** column name */
-  Username = 'username'
+  Username = 'username',
 }
-
 
 /** expression to compare columns of type uuid. All fields are combined with logical 'AND'. */
 export type Uuid_Comparison_Exp = {
@@ -823,37 +791,50 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
-export type GetTodosQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetTodosQueryVariables = Exact<{ [key: string]: never }>;
 
-
-export type GetTodosQuery = (
-  { __typename?: 'query_root' }
-  & { todos: Array<(
-    { __typename?: 'todos' }
-    & Pick<Todos, 'id' | 'title' | 'userId'>
-  )> }
-);
-
+export type GetTodosQuery = { __typename?: 'query_root' } & {
+  todos: Array<
+    { __typename?: 'todos' } & Pick<Todos, 'id' | 'title' | 'userId'>
+  >;
+};
 
 export const GetTodosDocument = gql`
-    query GetTodos {
-  todos(limit: 9) {
-    id
-    title
-    userId
+  query GetTodos {
+    todos(limit: 9) {
+      id
+      title
+      userId
+    }
   }
-}
-    `;
+`;
 
 export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
 
-
-const defaultWrapper: SdkFunctionWrapper = sdkFunction => sdkFunction();
-export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
+const defaultWrapper: SdkFunctionWrapper = (sdkFunction) => sdkFunction();
+export function getSdk(
+  client: GraphQLClient,
+  withWrapper: SdkFunctionWrapper = defaultWrapper,
+) {
   return {
-    GetTodos(variables?: GetTodosQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: GetTodosQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
-        return withWrapper(() => client.rawRequest<GetTodosQuery>(print(GetTodosDocument), variables, requestHeaders));
-    }
+    GetTodos(
+      variables?: GetTodosQueryVariables,
+      requestHeaders?: Dom.RequestInit['headers'],
+    ): Promise<{
+      data?: GetTodosQuery | undefined;
+      extensions?: any;
+      headers: Dom.Headers;
+      status: number;
+      errors?: GraphQLError[] | undefined;
+    }> {
+      return withWrapper(() =>
+        client.rawRequest<GetTodosQuery>(
+          print(GetTodosDocument),
+          variables,
+          requestHeaders,
+        ),
+      );
+    },
   };
 }
 export type Sdk = ReturnType<typeof getSdk>;

@@ -3,14 +3,12 @@ import {
   ExecutionContext,
   HttpException,
   HttpStatus,
-  Inject,
   Injectable,
 } from '@nestjs/common';
 import axios from 'axios';
 import * as jwt from 'jsonwebtoken';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { ConfigService } from '@nestjs/config';
-import jwtDecode, {JwtPayload} from "jwt-decode";
 
 @Injectable()
 export class AuthGuard implements CanActivate {

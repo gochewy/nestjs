@@ -1,6 +1,5 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { TodosService } from './todos.service';
-import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('todos')
 export class TodosController {

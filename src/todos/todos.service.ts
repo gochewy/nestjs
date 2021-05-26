@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import client from '../lib/searchClient';
+import client from '../lib/search-client';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
-import getGraphqlSdk from '../graphql/graphqlClient';
+import getGraphqlSdk from '../graphql/graphql-client';
 
 @Injectable()
 export class TodosService {
