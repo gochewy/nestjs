@@ -1,6 +1,11 @@
 import axios from 'axios';
+// import config from '../../../chewy.json';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
+const isAuthEnabled = require('../../../chewy.json').modules.auth.enabled;
 async function getPublicKey() {
+  if (!isAuthEnabled) {
+    return 'NO_KEYCLOAK';
+  }
   let response;
   try {
     response = await axios(process.env.PUBLIC_KEY_URLS, {
