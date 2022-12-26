@@ -1,0 +1,5 @@
+repository: https://github.com/gochewy/nestjs.git
+name: nestjs
+type: source
+version: 0.1.1-branch
+dependencies: []
